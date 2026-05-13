@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devdeploy-backend
+  namespace: devdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devdeploy-backend
+  template:
+    metadata:
+      labels:
+        app: devdeploy-backend
+    spec:
+      containers:
+      - name: backend
+        image: devdeploy-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 4000
+        env:
+        - name: NODE_ENV
+          value: production
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        - name: workspaces
+          mountPath: /tmp/devdeploy-workspaces
+      volumes:
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: workspaces
+        hostPath:
+          path: /tmp/devdeploy-workspaces
