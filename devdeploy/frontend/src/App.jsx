@@ -1,51 +1,30 @@
-import React from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import DeployPage from './pages/DeployPage';
-import StatusPage from './pages/StatusPage';
+import { Routes, Route } from "react-router-dom";
 
-export default function App() {
-  const { pathname } = useLocation();
+import Navbar from "./components/Navbar";
 
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+
+function App() {
   return (
-    <div style={{ maxWidth: 820, margin: '0 auto', padding: '0 20px' }}>
-      <header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '20px 0',
-          borderBottom: '1px solid #1e293b',
-          marginBottom: 32,
-        }}
-      >
-        <Link
-          to="/"
-          style={{ color: '#fff', fontSize: 22, fontWeight: 700, letterSpacing: -0.5 }}
-        >
-          ⚙️ DevDeploy
-        </Link>
-        <nav style={{ display: 'flex', gap: 8 }}>
-          <Link
-            to="/"
-            style={{
-              padding: '6px 14px',
-              borderRadius: 6,
-              fontSize: 14,
-              background: pathname === '/' ? '#1e293b' : 'transparent',
-              color: pathname === '/' ? '#e2e8f0' : '#94a3b8',
-            }}
-          >
-            Deploy
-          </Link>
-        </nav>
-      </header>
+    <div>
 
-      <main>
-        <Routes>
-          <Route path="/" element={<DeployPage />} />
-          <Route path="/status/:id" element={<StatusPage />} />
-        </Routes>
-      </main>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/signup" element={<Signup />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+
     </div>
   );
 }
+
+export default App;
