@@ -1,11 +1,12 @@
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
-
+const navigate = useNavigate();
   const handleLogout = () => {
 
-    localStorage.removeItem("token");
+  localStorage.removeItem("token");
 
-    alert("Logged out successfully");
-  };
+  navigate("/login");
+};
 
   return (
     <div className="min-h-screen bg-gray-950 text-white p-8">
