@@ -1,0 +1,39 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/10-Akshay/DevDeploy.git'
+            }
+        }
+
+        stage('Build Backend Docker Image') {
+            steps {
+                sh 'docker build -t devdeploy-backend ./backend'
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                sh 'docker build -t devdeploy-frontend ./frontend'
+            }
+        }
+
+        stage('Deploy Backend to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/backend-deployment.yaml'
+                sh 'kubectl apply -f k8s/backend-service.yaml'
+            }
+        }
+
+        stage('Deploy Frontend to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/frontend-deployment.yaml'
+                sh 'kubectl apply -f k8s/frontend-service.yaml'
+            }
+        }
+    }
+}
